@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Kenyata Travel — Kenya Experiences</title>
+  <style>
+    :root{
+      --bg: #ffffff;
+      --text: #1b1b1b;
+      --muted: #5f6b6a;
+      --green: #0a8a57;
+      --green-dark: #0b6b3b;
+      --orange: #f28a2a;
+      --gold: #f4c33a;
+      --card: #ffffff;
+      --shadow: 0 8px 24px rgba(0,0,0,.08);
+      --radius: 14px;
+    }
+    * { box-sizing: border-box; }
+    html, body { margin: 0; padding: 0; font-family: system-ui, -apple-system, Arial, sans-serif; color: var(--text); background: var(--bg); }
+    a { color: inherit; text-decoration: none; }
+
+    /* Global layout */
+    .container { width: 92%; max-width: 1180px; margin: 0 auto; }
+    header { position: sticky; top: 0; z-index: 100; background: #fff; box-shadow: 0 4px 12px rgba(0,0,0,.06); }
+    nav { display: flex; align-items: center; justify-content: space-between; padding: 14px 0; }
+    .brand { display: flex; align-items: center; gap: 12px; font-weight: 700; font-size: 1.1rem; letter-spacing: .5px; }
+    .brand .logo { width: 34px; height: 34px; border-radius: 9px; background: linear-gradient(135deg, var(--green), #38a169); display: inline-block; }
+    .nav-links { display: flex; gap: 20px; align-items: center; }
+    .nav-links a { color: #333; font-size: 0.95rem; opacity: .9; padding: 6px 10px; border-radius: 6px; }
+    .cta-small { background: var(--green); color: #fff; padding: 8px 14px; border-radius: 999px; font-weight: 600; font-size: .9rem; }
+
+    /* Hero */
+    .hero { position: relative; height: 520px; display: grid; place-items: center; color: #fff; overflow: hidden; }
+    .hero img.hero-img { position: absolute; width: 100%; height: 100%; object-fit: cover; top: 0; left: 0; z-index: 0; }
+    .hero .overlay { position: absolute; inset: 0; background: linear-gradient(to right, rgba(0,0,0,.45), rgba(0,0,0,.15) 60%, rgba(0,0,0,.0)); z-index: 1; }
+    .hero-content { position: relative; z-index: 2; text-align: center; padding: 0 20px; }
+    .hero h1 { font-size: 2.6rem; line-height: 1.15; margin: 0 0 12px; letter-spacing: .5px; }
+    .hero p { font-size: 1.15rem; color: #f2f2f2; max-width: 700px; margin: 0 auto 22px; opacity: .95; }
+    .btn-row { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; }
+    .btn { border: 1px solid rgba(255,255,255,.7); color: #fff; background: rgba(255,255,255,.15); padding: 12px 20px; border-radius: 999px; font-weight: 600; cursor: default; }
+    .btn.primary { background: #fff; color: #0b3d2b; border: none; padding: 12px 22px; }
+
+    /* Sections */
+    section { padding: 64px 0; }
+    h2 { font-size: 2rem; margin-bottom: 12px; }
+    .sub { color: var(--muted); margin-bottom: 20px; font-size: 1rem; }
+
+    /* Features */
+    .features { display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px; }
+    .card { background: var(--card); border-radius: var(--radius); box-shadow: var(--shadow); padding: 20px; display: flex; flex-direction: column; align-items: flex-start; }
+    .card img { width: 100%; height: 120px; object-fit: cover; border-radius: 10px; margin-bottom: 12px; }
+    .card h3 { margin: 6px 0 6px; font-size: 1.05rem; }
+    .card p { color: #555; font-size: .95rem; margin: 0; }
+    @media (max-width: 1024px){ .features { grid-template-columns: repeat(2, 1fr); } }
+    @media (max-width: 640px){ .features { grid-template-columns: 1fr; } }
+
+    /* About / Highlights */
+    .highlights { display: grid; grid-template-columns: 1.1fr 0.9fr; gap: 28px; align-items: center; }
+    .highlights img { width: 100%; height: 320px; object-fit: cover; border-radius: 12px; }
+    .highlight-copy { font-size: 1.02rem; line-height: 1.6; color: #333; }
+    @media (max-width: 900px){ .highlights { grid-template-columns: 1fr; } }
+    .chips { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 12px; }
+    .chip { padding: 8px 12px; border-radius: 999px; background: #f6f1ea; color: #6a4a00; font-weight: 600; font-size: .85rem; }
+
+    /* FAQs */
+    .faq { border: 1px solid #eee; border-radius: 12px; padding: 14px 14px; margin-bottom: 12px; background: #fff; }
+    .faq dt { font-weight: 700; }
+    .faq dd { margin: 6px 0 0 0; color: #555; }
+
+    /* Testimonials */
+    .testimonials { display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px; }
+    .testi { background: #fff; border-radius: 12px; padding: 16px; box-shadow: var(--shadow); }
+    .stars { color: #f5c518; margin-bottom: 6px; }
+    @media (max-width: 1024px){ .testimonials { grid-template-columns: repeat(2, 1fr); } }
+    @media (max-width: 640px){ .testimonials { grid-template-columns: 1fr; } }
+
+    /* CTAs */
+    .cta { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; align-items: center; }
+    .cta-card { padding: 24px; border-radius: 12px; background: linear-gradient(135deg, #fff, #f9fbfe); box-shadow: var(--shadow); }
+    .cta h3 { margin: 0 0 6px; }
+    .order-row { display: flex; align-items: center; gap: 12px; margin-top: 8px; }
+    .order-btn { padding: 12px 18px; border-radius: 8px; border: 1px solid #ddd; background: #fff; color: #333; cursor: default; font-weight: 600; }
+    .whatsapp-link { font-size: .9rem; color: #1a5e20; font-weight: 600; padding: 6px 8px; border-radius: 6px; border: 1px dashed #1a5e20; display: inline-block; }
+
+    /* Footer */
+    footer { padding: 28px 0; color: #555; font-size: .95rem; }
+    .footer-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; align-items: start; }
+    @media (max-width: 700px){ .footer-grid { grid-template-columns: 1fr; } }
+    .made { margin-top: 6px; font-size: .9rem; color: #888; }
+
+    /* Floating WhatsApp button */
+    .wa-float { position: fixed; right: 22px; bottom: 22px; width: 64px; height: 64px; border-radius: 20px; background: #25D366; display: grid; place-items: center; box-shadow: 0 8px 20px rgba(0,0,0,.15); cursor: pointer; z-index: 999; }
+    .wa-float svg { width: 28px; height: 28px; fill: white; }
+    .wa-tooltip { position: absolute; right: 72px; bottom: 26px; background: #1e1e1e; color: #fff; padding: 6px 10px; border-radius: 6px; font-size: 12px; white-space: nowrap; display: none; }
+    .wa-container { position: relative; }
+    .wa-float:hover .wa-tooltip { display: block; }
+  </style>
+</head>
+<body>
+  <!-- Navigation -->
+  <header>
+    <div class="container" style="padding: 6px 0;">
+      <nav aria-label="Main navigation">
+        <div class="brand" id="home">
+          <span class="logo" aria-label="Kenyata logo"></span>
+          <span>Kenyata Travel</span>
+        </div>
+        <div class="nav-links" aria-label="Site sections">
+          <a href="#home" class="nav-link">Home</a>
+          <a href="#packages" class="nav-link">Packages</a>
+          <a href="#about" class="nav-link">About</a>
+          <a href="#reviews" class="nav-link">Reviews</a>
+          <a href="#faqs" class="nav-link">FAQs</a>
+          <a href="#contact" class="cta-small nav-link">Contact</a>
+        </div>
+      </nav>
+    </div>
+  </header>
+
+  <!-- Hero -->
+  <section class="hero" aria-label="Hero" id="home">
+    <img class="hero-img" src="https://im.runware.ai/image/ws/2/ii/f0b083f9-b531-4f85-9c58-b1eb79be79e0.jpg" alt="Kenyan landscapes with safari, coast and city life"/>
+    <div class="overlay" aria-hidden="true"></div>
+    <div class="hero-content container">
+      <h1 style="color:#fff; text-shadow: 0 2px 8px rgba(0,0,0,.25);">Kenyata Travel — Discover Kenya with Heart</h1>
+      <p>Curated adventures across Kenya — thrilling safaris, pristine beaches, vibrant culture, and tailor-made journeys for individuals, families, and groups.</p>
+      <div class="btn-row">
+        <span class="btn primary" aria-label="Explore Packages" style="cursor:default;">Explore Packages</span>
+        <span class="btn" aria-label="Plan Your Trip" style="cursor:default;">Plan Your Trip</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- Features / Services -->
+  <section class="container" aria-label="Features" id="packages">
+    <h2>What we craft for you</h2>
+    <p class="sub">From wild safaris and pristine coasts to cultural encounters and family-friendly adventures — Kenyata Travel builds your Kenya, your way.</p>
+    <div class="features" style="gap:28px;">
+      <div class="card" aria-label="Safari & Wildlife">
+        <img src="https://im.runware.ai/image/ws/2/ii/4d526362-8a25-4602-85b6-d92862d75dd3.jpg" alt="Safari and wildlife"/>
+        <h3>Safari & Wildlife</h3>
+        <p>Escape into Kenya's famed parks with expert guides, game drives, and immersive wildlife experiences.</p>
+      </div>
+      <div class="card" aria-label="Beaches & Coast"> 
+        <img src="https://im.runware.ai/image/ws/2/ii/8e5a75a2-d50b-4995-bf1b-64c3be08468a.jpg" alt="Kenyan beaches"/>
+        <h3>Beaches & Coast</h3>
+        <p>Sun-kissed shores, coral reefs, and relaxing stays along Kenya's iconic coastline.</p>
+      </div>
+      <div class="card" aria-label="Culture & Heritage">
+        <img src="https://im.runware.ai/image/ws/2/ii/4d526362-8a25-4602-85b6-d92862d75dd3.jpg" alt="Cultural experiences"/>
+        <h3>Culture & Heritage</h3>
+        <p>Meet communities, learn crafts, and celebrate traditions with authentic, respectful encounters.</p>
+      </div>
+      <div class="card" aria-label="Custom & Family Journeys">
+        <img src="https://im.runware.ai/image/ws/2/ii/8e5a75a2-d50b-4995-bf1b-64c3be08468a.jpg" alt="Custom journeys"/>
+        <h3>Custom & Family Journeys</h3>
+        <p>Tailored itineraries that fit your pace, interests, and budget — for all ages.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- About / Highlights -->
+  <section class="container" aria-label="About Kenyata" id="about">
+    <div class="highlights" style="align-items: center;">
+      <div>
+        <h2>Our story</h2>
+        <p class="highlight-copy">Kenyata Travel began with a simple belief: travel unlocks humanity when journeys are crafted with care. We partner with local communities, guide you with seasoned expertise, and design experiences that celebrate Kenya’s natural wonders and diverse cultures.</p>
+        <div class="chips" aria-label="Highlights">
+          <span class="chip">Locally rooted</span>
+          <span class="chip">Eco-conscious itineraries</span>
+          <span class="chip">Small-group adventures</span>
+          <span class="chip">Transparent pricing</span>
+        </div>
+      </div>
+      <img src="https://im.runware.ai/image/ws/2/ii/8e5a75a2-d50b-4995-bf1b-64c3be08468a.jpg" alt="Kenya landscape collage" style="border-radius:12px;"/>
+    </div>
+  </section>
+
+  <!-- FAQs -->
+  <section class="container" aria-label="FAQs" id="faqs">
+    <h2>Frequently Asked Questions</h2>
+    <p class="sub">Answers to common questions to help you plan your Kenya adventure with confidence.</p>
+    <div class="faq" aria-label="FAQ 1">
+      <dt>1. What makes Kenyata Travel different?</dt>
+      <dd>We design immersive experiences with local partners, prioritize safety, and tailor itineraries to your pace and interests.</dd>
+    </div>
+    <div class="faq" aria-label="FAQ 2">
+      <dt>2. How flexible are your itineraries?</dt>
+      <dd>Very flexible. We adapt destinations, days, and activities to ensure comfort and excitement for all travelers.</dd>
+    </div>
+    <div class="faq" aria-label="FAQ 3">
+      <dt>3. Are family-friendly options available?</dt>
+      <dd>Yes. We have kid-friendly safaris, shorter drives, and engaging cultural experiences suitable for all ages.</dd>
+    </div>
+    <div class="faq" aria-label="FAQ 4">
+      <dt>4. What is included in the packages?</dt>
+      <dd>Senior-level planning, accommodations, transport, guides, and select activities. Some items may be optional—let us tailor it for you.</dd>
+    </div>
+    <div class="faq" aria-label="FAQ 5">
+      <dt>5. Is travel insurance required?</dt>
+      <dd>We recommend comprehensive travel insurance for peace of mind during international travel.</dd>
+    </div>
+    <div class="faq" aria-label="FAQ 6">
+      <dt>6. How do we book?</dt>
+      <dd>We provide a simple planning step and confirm arrangements via email. A dedicated travel designer will assist you throughout.</dd>
+    </div>
+    <div class="faq" aria-label="FAQ 7">
+      <dt>7. Can you customize for dietary needs or accessibility?</dt>
+      <dd>Absolutely. We accommodate dietary restrictions and accessibility requirements wherever possible.</dd>
+    </div>
+  </section>
+
+  <!-- Reviews -->
+  <section class="container" aria-label="Reviews" id="reviews">
+    <h2>Reviews</h2>
+    <p class="sub">What travelers say about Kenyata Travel.</p>
+    <div class="testimonials" aria-label="Customer reviews">
+      <div class="testi">
+        <div class="stars">★★★★★</div>
+        <p><strong>Amina N.</strong> — Nairobi, Kenya</p>
+        <p>"Incredible safari and a seamless schedule. Our guide was amazing and the accommodations were perfect for our family."</p>
+      </div>
+      <div class="testi">
+        <div class="stars">★★★★★</div>
+        <p><strong>David K.</strong> — Mombasa, Kenya</p>
+        <p>"The coastal package exceeded expectations. Beautiful beaches, delicious Swahili cuisine, and great local insights."</p>
+      </div>
+      <div class="testi">
+        <div class="stars">★★★★★</div>
+        <p><strong>Grace L.</strong> — Eldoret, Kenya</p>
+        <p>"Effortless planning and thoughtful recommendations. We felt cared for from start to finish."</p>
+      </div>
+      <div class="testi">
+        <div class="stars">★★★★★</div>
+        <p><strong>Omar I.</strong> — Kisumu, Kenya</p>
+        <p>"Cultural encounters were both respectful and enlightening. A truly memorable experience for our group."</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Call to Action -->
+  <section class="container" aria-label="CTA" id="contact">
+    <h2>Get in touch</h2>
+    <p class="sub">Ready to start planning? Reach out and we’ll tailor a Kenya journey for you.</p>
+    <div class="cta" style="align-items: stretch;">
+      <div class="cta-card" aria-label="Plan your trip">
+        <h3>Ready to explore Kenya with Kenyata?</h3>
+        <p>Tell us your dream itinerary and we’ll craft a tailor-made journey just for you.</p>
+        <div class="order-row" style="margin-top: 12px;">
+          <span class="order-btn" aria-disabled="true">Order Now</span>
+          <span class="whatsapp-link" aria-label="WhatsApp link (display format)" title="wa.me/254700000000">WhatsApp: wa.me/254700000000</span>
+        </div>
+      </div>
+      <div class="cta-card" aria-label="Plan with a travel designer">
+        <h3>Speak with a Kenyata Travel designer</h3>
+        <p>We’ll guide you through options, timings, and rates to fit your aspirations.</p>
+        <div class="order-row" style="margin-top: 12px;">
+          <span class="order-btn" aria-disabled="true">Order Now</span>
+          <span class="whatsapp-link" aria-label="WhatsApp link (display format)" title="wa.me/254700000000">WhatsApp: wa.me/254700000000</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Floating WhatsApp Button (Africa default) -->
+  <div class="wa-container" aria-label="WhatsApp contact">
+    <div class="wa-float" role="button" aria-label="Chat on WhatsApp" data-href="https://wa.me/254700000000?text=Hello%2C%20I%27m%20interested%20in%20a%20Kenya%20trip%2C%20please%20help" title="Chat on WhatsApp">
+      <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-label="WhatsApp icon">
+        <path d="M20.5 3h-17A3.5 3.5 0 0 0 0 6.5v11A3.5 3.5 0 0 0 3.5 21h8.1l-1.3 4.7 4.6-3.5h3.6A3.5 3.5 0 0 0 23 16.5v-10A3.5 3.5 0 0 0 19.5 3h1z" fill-rule="evenodd"/>
+      </svg>
+      <span class="wa-tooltip">WhatsApp chat (format: wa.me)</span>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <footer>
+    <div class="container footer-grid">
+      <div>
+        <strong>Kenyata Travel</strong>
+        <p style="margin:6px 0 0; color:#666;">Kenya-focused travel design and experiences.</p>
+      </div>
+      <div style="text-align:right;">
+        <span class="whatsapp-link" aria-label="Footer WhatsApp link" title="wa.me/254700000000">Chat with us on WhatsApp: wa.me/254700000000</span>
+        <p class="made">made with ❤️ by adorrable.dev</p>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    // Minimal enhancement: clicking the floating button copies the WhatsApp URL to clipboard (non-navigating behavior)
+    (function(){
+      const btn = document.querySelector('.wa-float');
+      btn.addEventListener('click', function(){
+        const url = btn.getAttribute('data-href');
+        if(!url) return;
+        navigator.clipboard?.writeText(url).catch(()=>{});
+        // show a simple ephemeral message
+        const tip = document.createElement('div');
+        tip.textContent = 'WhatsApp link copied to clipboard';
+        tip.style.position = 'fixed';
+        tip.style.bottom = '90px';
+        tip.style.right = '28px';
+        tip.style.background = '#111';
+        tip.style.color = '#fff';
+        tip.style.padding = '8px 12px';
+        tip.style.borderRadius = '6px';
+        tip.style.fontSize = '12px';
+        tip.style.boxShadow = '0 6px 12px rgba(0,0,0,.15)';
+        document.body.appendChild(tip);
+        setTimeout(()=>tip.remove(), 1500);
+      });
+    })();
+  </script>
+</body>
+</html>
